@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Taxi Partner — drive, invest, and go further than one app{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages.css' %}">
+<link rel="stylesheet" href="{% static 'css/cars.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero__inner">
+        <div>
+            <p class="hero__eyebrow">Taxi Partner</p>
+            <h1 class="hero__title">One partner, <em>every</em> ride-hailing app you drive for.</h1>
+            <p class="hero__text">
+                We sit between you and platforms like Bolt and Uber: renting reliable cars
+                to drivers who need one, and putting investors' vehicles to work in a fleet
+                that's managed, insured, and kept on the road.
+            </p>
+            <div class="hero__actions">
+                <a href="{% url 'for_drivers' %}" class="btn btn--primary">Become a Driver</a>
+                <a href="{% url 'for_investors' %}" class="btn btn--outline">Become an Investor</a>
+            </div>
+        </div>
+
+        <div class="hero__stats">
+            <div class="stat-card">
+                <span class="stat-card__value">{{ stats.active_drivers|default:"400+" }}</span>
+                <span class="stat-card__label">Active drivers on the road</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-card__value">{{ stats.fleet_size|default:"180+" }}</span>
+                <span class="stat-card__label">Vehicles in the fleet</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-card__value">{{ stats.cities|default:"6" }}</span>
+                <span class="stat-card__label">Partner cities</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-card__value">{{ stats.payout_time|default:"48h" }}</span>
+                <span class="stat-card__label">Avg. investor payout time</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head section-head--center">
+        <p class="eyebrow">Why Taxi Partner</p>
+        <h2 class="section-title">A middle layer built for both sides of the fleet</h2>
+        <p class="section-lede">
+            Bolt and Uber connect riders to drivers. We connect drivers to cars, and cars to
+            the people who own them — so both sides get a partner who actually manages the vehicle.
+        </p>
+    </div>
+
+    <div class="reasons-grid">
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <h3 class="reason-card__title">Vetted on both sides</h3>
+            <p class="reason-card__text">Every driver is background-checked and every car is inspected before it hits the road — so trust runs in both directions.</p>
+        </div>
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+            </div>
+            <h3 class="reason-card__title">Works with Bolt & Uber</h3>
+            <p class="reason-card__text">We don't compete with the apps you already earn on — we make sure you always have a roadworthy car to use them with.</p>
+        </div>
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <h3 class="reason-card__title">Fast turnaround</h3>
+            <p class="reason-card__text">Driver applications and payouts to investors are both handled in days, not weeks.</p>
+        </div>
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/><circle cx="12" cy="8" r="4"/></svg>
+            </div>
+            <h3 class="reason-card__title">Real local support</h3>
+            <p class="reason-card__text">A local team handles maintenance, paperwork, and questions — not a ticket queue.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section section--panel section--panel-wide">
+    <div class="section-inner">
+        <div class="section-head">
+            <p class="eyebrow">Two ways in</p>
+            <h2 class="section-title">Which side are you on?</h2>
+        </div>
+        <div class="path-split">
+            <div class="path-card path-card--drivers">
+                <h3 class="path-card__title">I want to drive</h3>
+                <p class="path-card__text">Rent a car that's already insured, inspected, and ready for Bolt or Uber — no upfront purchase needed.</p>
+                <a href="{% url 'for_drivers' %}" class="btn btn--primary">See driver info</a>
+            </div>
+            <div class="path-card path-card--investors">
+                <h3 class="path-card__title">I want to invest</h3>
+                <p class="path-card__text">Sell or place your car into our managed fleet and earn from it without dealing with drivers directly.</p>
+                <a href="{% url 'for_investors' %}" class="btn btn--outline">See investor info</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <p class="eyebrow">The fleet</p>
+    </div>
+    {% include "fleet.html" with fleet_title="Cars available right now" fleet_lede="A snapshot of what's currently in rotation across our partner cities." cars=cars %}
+</section>
+
+<section class="section section--tight">
+    <div class="cta-banner">
+        <div>
+            <h2 class="cta-banner__title">Not sure which path fits you?</h2>
+            <p class="cta-banner__text">Tell us a bit about your situation and we'll point you to the right option.</p>
+        </div>
+        <div class="cta-banner__actions">
+            <a href="{% url 'contacts' %}" class="btn btn--primary">Contact us</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

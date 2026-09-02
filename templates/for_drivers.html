@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+Rent a Car — Taxi Partner
+{% endblock %}
+
+
+{% block content %}
+
+<section class="page-header">
+
+    <div class="container">
+
+        <p class="eyebrow">
+            VEHICLE RENTAL
+        </p>
+
+        <h1>
+            Choose your next taxi vehicle.
+        </h1>
+
+        <p>
+            Request a vehicle and our team will
+            confirm availability and terms.
+        </p>
+
+    </div>
+
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <p class="eyebrow">The fleet</p>
+    </div>
+    {% include "fleet.html" with fleet_title="Cars available right now" fleet_lede="A snapshot of what's currently in rotation across our partner cities." cars=cars %}
+</section>
+
+{% endblock %}

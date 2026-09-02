@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        {% block title %}
+            Taxi Partner
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+<header class="site-header">
+    <div class="site-header__bar">
+
+        <div class="site-header__brand">
+            <a href="{% url 'home' %}" class="brand" aria-label="Taxi Partner — home">
+                <span class="brand__mark" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span>
+                </span>
+                <span class="brand__text">TAXI<em>PARTNER</em></span>
+            </a>
+        </div>
+
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+
+        <nav class="site-nav" id="siteNav" aria-label="Primary">
+            <ul class="site-nav__list">
+                <li>
+                    <a href="{% url 'for_drivers' %}"
+                       class="nav-btn {% if request.resolver_match.url_name == 'for_drivers' %}is-active{% endif %}">
+                        For Drivers
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'for_investors' %}"
+                       class="nav-btn {% if request.resolver_match.url_name == 'for_investors' %}is-active{% endif %}">
+                        For Investors
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'contacts' %}"
+                       class="nav-btn nav-btn--accent {% if request.resolver_match.url_name == 'contacts' %}is-active{% endif %}">
+                        Contacts
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+
+</header>
+
+
+<main>
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+
+<footer class="site-footer">
+
+
+    <div class="site-footer__inner">
+
+        <div class="site-footer__brand">
+            <a href="{% url 'home' %}" class="brand brand--footer" aria-label="Taxi Partner — home">
+                <span class="brand__mark" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span>
+                </span>
+                <span class="brand__text">TAXI<em>PARTNER</em></span>
+            </a>
+            <p class="site-footer__tagline">On the meter, on your side.</p>
+        </div>
+
+        <nav class="site-footer__nav" aria-label="Footer">
+            <ul class="site-footer__list">
+                <li><a href="{% url 'for_drivers' %}">For Drivers</a></li>
+                <li><a href="{% url 'for_investors' %}">For Investors</a></li>
+                <li><a href="{% url 'contacts' %}">Contacts</a></li>
+            </ul>
+        </nav>
+
+    </div>
+
+    <div class="site-footer__bottom">
+        <p>&copy; <span id="footerYear">2026</span> Taxi Partner. All rights reserved.</p>
+    </div>
+</footer>
+
+
+
+<script src="{% static 'js/scripts.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+
+<div class="fleet">
+    <div class="fleet__head">
+        <div>
+            <h2 class="section-title">{{ fleet_title }}</h2>
+            {% if fleet_lede %}<p class="section-lede">{{ fleet_lede }}</p>{% endif %}
+        </div>
+        <div class="fleet__controls">
+            <button type="button" class="fleet-arrow fleet-arrow--prev" aria-label="Previous cars">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button type="button" class="fleet-arrow fleet-arrow--next" aria-label="Next cars">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="fleet__viewport">
+        <div class="fleet__track">
+            {% for car in cars %}
+            <article class="car-card">
+                <div class="car-card__media">
+                    {% if car.badge %}<span class="car-card__badge">{{ car.badge }}</span>{% endif %}
+                    {% if car.image %}
+                        <img src="{{ car.image.url }}" alt="{{ car.name }}" loading="lazy">
+                    {% else %}
+                        <svg viewBox="0 0 64 64" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 38l4-13a5 5 0 015-3.5h30a5 5 0 015 3.5l4 13"/>
+                            <rect x="6" y="38" width="52" height="12" rx="3"/>
+                            <circle cx="18" cy="50" r="4"/>
+                            <circle cx="46" cy="50" r="4"/>
+                            <path d="M8 38h48"/>
+                        </svg>
+                    {% endif %}
+                </div>
+                <div class="car-card__body">
+                    <h3 class="car-card__title">{{ car.name }}</h3>
+                    <ul class="car-card__specs">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+                            {{ car.transmission }}
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l6-4 6 4v12"/><path d="M14 21v-6h4v6"/></svg>
+                            {{ car.fuel_type }}
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+                            {{ car.seats }} seats
+                        </li>
+                    </ul>
+                    <div class="car-card__footer">
+                        <span class="car-card__price">{{ car.price }} <span>{{ car.price_period }}</span></span>
+
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="fleet__dots" aria-hidden="true"></div>
+</div>
