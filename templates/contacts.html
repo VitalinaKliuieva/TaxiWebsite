@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Contact us — Taxi Partner{% endblock %}
+{% block title %}{% trans "Contact us — Taxi Partner" %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/pages.css' %}">
@@ -13,24 +13,24 @@
 <section class="hero hero--compact">
     <div class="hero__inner">
         <div>
-            <p class="hero__eyebrow">Contacts</p>
-            <h1 class="hero__title">Tell us what you need — <em>driving</em> or <em>investing</em>.</h1>
-            <p class="hero__text">Pick the form that matches you below. A real person on our team follows up on every submission.</p>
+            <p class="hero__eyebrow">{% trans "Contacts" %}</p>
+            <h1 class="hero__title">{% blocktrans %}Tell us what you need — <em>driving</em> or <em>investing</em>.{% endblocktrans %}</h1>
+            <p class="hero__text">{% trans "Pick the form that matches you below. A real person on our team follows up on every submission." %}</p>
         </div>
     </div>
 </section>
 
 <section class="section contact-section">
 
-    <div class="form-tabs" role="tablist" aria-label="Choose a contact form">
-        <button type="button" class="form-tab is-active" data-target="driver-panel" role="tab" aria-selected="true">I'm a Driver</button>
-        <button type="button" class="form-tab" data-target="investor-panel" role="tab" aria-selected="false">I'm an Investor</button>
+    <div class="form-tabs" role="tablist" aria-label="{% trans 'Choose a contact form' %}">
+        <button type="button" class="form-tab is-active" data-target="driver-panel" role="tab" aria-selected="true">{% trans "I'm a Driver" %}</button>
+        <button type="button" class="form-tab" data-target="investor-panel" role="tab" aria-selected="false">{% trans "I'm an Investor" %}</button>
     </div>
 
     <!-- ============================= DRIVER FORM ============================= -->
     <div class="form-panel" id="driver-panel" role="tabpanel">
-        <h2 class="form-panel__title">Driver enquiry</h2>
-        <p class="form-panel__text">Leave your contact details and we'll reach out about renting a car and getting registered.</p>
+        <h2 class="form-panel__title">{% trans "Driver enquiry" %}</h2>
+        <p class="form-panel__text">{% trans "Leave your contact details and we'll reach out about renting a car and getting registered." %}</p>
 
         <div class="form-banner"></div>
 
@@ -38,33 +38,33 @@
             {% csrf_token %}
 
             <div class="field field--full">
-                <label for="driver-name">Full name</label>
+                <label for="driver-name">{% trans "Full name" %}</label>
                 {{ driver_form.name }}
                 <span class="field-error" data-error-for="name"></span>
             </div>
 
             <div class="field">
-                <label for="driver-email">Email</label>
+                <label for="driver-email">{% trans "Email" %}</label>
                 {{ driver_form.email }}
                 <span class="field-error" data-error-for="email"></span>
             </div>
 
             <div class="field">
-                <label for="driver-phone">Phone number</label>
+                <label for="driver-phone">{% trans "Phone number" %}</label>
                 {{ driver_form.phone_number }}
                 <span class="field-error" data-error-for="phone_number"></span>
             </div>
 
             <div class="contact-form__actions">
-                <button type="submit" class="btn btn--primary contact-form__submit">Send enquiry</button>
+                <button type="submit" class="btn btn--primary contact-form__submit">{% trans "Send enquiry" %}</button>
             </div>
         </form>
     </div>
 
     <!-- ============================ INVESTOR FORM ============================ -->
     <div class="form-panel" id="investor-panel" role="tabpanel" hidden>
-        <h2 class="form-panel__title">Investor enquiry</h2>
-        <p class="form-panel__text">Tell us about the car and what you're looking for — a sale or ongoing rental income.</p>
+        <h2 class="form-panel__title">{% trans "Investor enquiry" %}</h2>
+        <p class="form-panel__text">{% trans "Tell us about the car and what you're looking for — a sale or ongoing rental income." %}</p>
 
         <div class="form-banner"></div>
 
@@ -72,61 +72,61 @@
             {% csrf_token %}
 
             <div class="field">
-                <label for="investor-name">Full name</label>
+                <label for="investor-name">{% trans "Full name" %}</label>
                 {{ investor_form.name }}
                 <span class="field-error" data-error-for="name"></span>
             </div>
 
             <div class="field">
-                <label for="investor-phone">Phone number</label>
+                <label for="investor-phone">{% trans "Phone number" %}</label>
                 {{ investor_form.phone_number }}
                 <span class="field-error" data-error-for="phone_number"></span>
             </div>
 
             <div class="field field--full">
-                <label for="investor-email">Email</label>
+                <label for="investor-email">{% trans "Email" %}</label>
                 {{ investor_form.email }}
                 <span class="field-error" data-error-for="email"></span>
             </div>
 
             <div class="field">
-                <label for="investor-date">Date of registration</label>
+                <label for="investor-date">{% trans "Date of registration" %}</label>
                 {{ investor_form.date_of_registration }}
                 <span class="field-error" data-error-for="date_of_registration"></span>
             </div>
 
             <div class="field">
-                <label for="investor-offer">Offer type</label>
+                <label for="investor-offer">{% trans "Offer type" %}</label>
                 {{ investor_form.offer_type }}
                 <span class="field-error" data-error-for="offer_type"></span>
             </div>
 
             <div class="field">
-                <label for="investor-brand">Car brand</label>
+                <label for="investor-brand">{% trans "Car brand" %}</label>
                 {{ investor_form.car_brand }}
                 <span class="field-error" data-error-for="car_brand"></span>
             </div>
 
             <div class="field">
-                <label for="investor-model">Car model</label>
+                <label for="investor-model">{% trans "Car model" %}</label>
                 {{ investor_form.car_model }}
                 <span class="field-error" data-error-for="car_model"></span>
             </div>
 
             <div class="field">
-                <label for="investor-year">Car year</label>
+                <label for="investor-year">{% trans "Car year" %}</label>
                 {{ investor_form.car_year }}
                 <span class="field-error" data-error-for="car_year"></span>
             </div>
 
             <div class="field">
-                <label for="investor-price">Expected price</label>
+                <label for="investor-price">{% trans "Expected price" %}</label>
                 {{ investor_form.expected_price }}
                 <span class="field-error" data-error-for="expected_price"></span>
             </div>
 
             <div class="contact-form__actions">
-                <button type="submit" class="btn btn--primary contact-form__submit">Send enquiry</button>
+                <button type="submit" class="btn btn--primary contact-form__submit">{% trans "Send enquiry" %}</button>
             </div>
         </form>
     </div>

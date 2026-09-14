@@ -1,35 +1,36 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class Car(models.Model):
     """A single vehicle in the fleet — shown in the home/for-drivers carousel."""
 
     class Transmission(models.TextChoices):
-        AUTOMATIC = "automatic", "Automatic"
-        MANUAL = "manual", "Manual"
+        AUTOMATIC = "automatic", _("Automatic")
+        MANUAL = "manual", _("Manual")
 
     class FuelType(models.TextChoices):
-        PETROL = "petrol", "Petrol"
-        DIESEL = "diesel", "Diesel"
-        HYBRID = "hybrid", "Hybrid"
-        ELECTRIC = "electric", "Electric"
+        PETROL = "petrol", _("Petrol")
+        DIESEL = "diesel", _("Diesel")
+        HYBRID = "hybrid", _("Hybrid")
+        ELECTRIC = "electric", _("Electric")
 
     class PricePeriod(models.TextChoices):
-        DAY = "/day", "Per day"
-        WEEK = "/week", "Per week"
-        MONTH = "/month", "Per month"
+        DAY = "/day", _("Per day")
+        WEEK = "/week", _("Per week")
+        MONTH = "/month", _("Per month")
 
-    name = models.CharField(max_length=100, help_text="e.g. Toyota Corolla 2022")
+    name = models.CharField(max_length=100, help_text=_("e.g. Toyota Corolla 2022"))
     transmission = models.CharField(max_length=20, choices=Transmission.choices, default=Transmission.AUTOMATIC)
     fuel_type = models.CharField(max_length=20, choices=FuelType.choices, default=FuelType.PETROL)
     seats = models.PositiveSmallIntegerField(default=4)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     price_period = models.CharField(max_length=10, choices=PricePeriod.choices, default=PricePeriod.WEEK)
-    badge = models.CharField(max_length=30, blank=True, help_text="Optional label, e.g. 'New' or 'Popular'")
+    badge = models.CharField(max_length=30, blank=True, help_text=_("Optional label, e.g. 'New' or 'Popular'"))
     image = models.ImageField(upload_to="cars/", blank=True, null=True)
-    is_available = models.BooleanField(default=True, help_text="Untick to hide from the site without deleting it")
+    is_available = models.BooleanField(default=True, help_text=_("Untick to hide from the site without deleting it"))
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -69,8 +70,8 @@ class InvestorLead(models.Model):
     """A submission from the investor contact form."""
 
     class OfferType(models.TextChoices):
-        SELL = "sell", "Sell the car"
-        RENT = "rent", "Rent it out through Taxi Partner"
+        SELL = "sell", _("Sell the car")
+        RENT = "rent", _("Rent it out through Taxi Partner")
 
     name = models.CharField(max_length=120)
     phone_number = models.CharField(max_length=30)

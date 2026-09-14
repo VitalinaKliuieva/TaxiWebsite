@@ -1,10 +1,11 @@
+/* ==========================================================================
+   Taxi Partner — header & footer
+   Palette:  asphalt #2B2E33 · asphalt-deep #17181B · line #45484E
+             taxi-yellow #FFC630 · off-white #F1F1EF · muted #9A9DA3
+   Type:     Oswald (brand / nav, condensed roadsign feel) + Inter (body)
+   ========================================================================== */
+
 :root {
-    --light-beige: #F1F1EF;
-    --dark-slate-grey: #2B2E33;
-    --light-blue: #ADD8E6;
-    --dark-sea-green: #8FBC8F;
-    --honey-dew: #F0FFF0;
-    --sage-green: #9A9DA3;
     --asphalt: #2B2E33;
     --asphalt-deep: #17181B;
     --line: #45484E;
@@ -12,10 +13,21 @@
     --off-white: #F1F1EF;
     --muted: #9A9DA3;
 
-    --font-display: 'Monospace', 'Monospace', sans-serif;
-    --font-body: 'Inter Medium', system-ui, sans-serif;
+    --font-display: 'Roboto', sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
 
     --header-h: 84px;
+
+    /* page-level tokens (home / for-drivers / for-investors) */
+    --ink: #1E2023;
+    --panel: #F4F3EF;
+    --panel-deep: #EAE8E2;
+    --card-bg: #FFFFFF;
+    --border-soft: #E2E0D9;
+    --success: #2E8B57;
+    --radius: 10px;
+    --shadow-card: 0 6px 20px rgba(23, 24, 27, 0.08);
+    --content-w: 1440px;
 }
 
 * { box-sizing: border-box; }
@@ -23,7 +35,7 @@
 body {
     margin: 0;
     font-family: var(--font-body);
-    color: var(--asphalt-deep);
+    color: var(--off-white);
     background: #fff;
 }
 
@@ -55,7 +67,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 .brand__mark span:nth-child(2),
 .brand__mark span:nth-child(3) {
-    background: var(--light-beige);
+    background: var(--off-white);
 }
 
 .brand__text {
@@ -64,7 +76,7 @@ ul { list-style: none; margin: 0; padding: 0; }
     letter-spacing: 0.5px;
     font-size: 1.5rem;
     line-height: 1;
-    color: var(--light-beige);
+    color: var(--off-white);
     white-space: nowrap;
 }
 
@@ -84,7 +96,7 @@ ul { list-style: none; margin: 0; padding: 0; }
     position: sticky;
     top: 0;
     z-index: 100;
-    background: var(--dark-slate-grey);
+    background: var(--asphalt);
     border-bottom: 1px solid var(--line);
 }
 
@@ -151,7 +163,111 @@ ul { list-style: none; margin: 0; padding: 0; }
     border-color: var(--yellow);
 }
 
+/* --------------------------------------------------------------------
+   Language switcher — toggle button + dropdown list
+   -------------------------------------------------------------------- */
 
+.site-nav__lang {
+    display: flex;
+    align-items: center;
+    margin-left: 4px;
+}
+
+.lang-switch {
+    position: relative;
+}
+
+.lang-switch__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: var(--off-white);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 9px 14px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.lang-switch__toggle svg { width: 16px; height: 16px; stroke: currentColor; flex-shrink: 0; }
+.lang-switch__chevron { width: 12px; height: 12px; transition: transform 0.15s ease; }
+
+.lang-switch__toggle:hover,
+.lang-switch__toggle:focus-visible {
+    border-color: var(--yellow);
+    color: var(--yellow);
+}
+
+.lang-switch__toggle:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 2px;
+}
+
+.lang-switch__toggle[aria-expanded="true"] .lang-switch__chevron {
+    transform: rotate(180deg);
+}
+
+.lang-switch__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 160px;
+    background: var(--asphalt);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    padding: 6px;
+    margin: 0;
+    list-style: none;
+    z-index: 20;
+}
+
+.lang-switch__menu[hidden] { display: none; }
+
+.lang-switch__form { margin: 0; }
+
+.lang-switch__option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    color: var(--off-white);
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 9px 12px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.lang-switch__option:hover,
+.lang-switch__option:focus-visible {
+    background: rgba(255, 198, 48, 0.12);
+    color: var(--yellow);
+    outline: none;
+}
+
+.lang-switch__option.is-active {
+    color: var(--yellow);
+    font-weight: 600;
+}
+
+/* checker stripe — the header's signature element, thin taxi-medallion rhythm */
+.site-header__stripe {
+    height: 6px;
+    background-image: repeating-linear-gradient(
+        135deg,
+        var(--yellow) 0 10px,
+        var(--asphalt-deep) 10px 20px
+    );
+}
 
 /* mobile nav toggle (hidden on desktop) */
 .nav-toggle {
@@ -173,13 +289,21 @@ ul { list-style: none; margin: 0; padding: 0; }
     height: 2px;
     width: 20px;
     margin: 0 auto;
-    background: var(--light-beige);
+    background: var(--off-white);
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-overlay {
+    display: none;
+}
+
+.nav-close {
+    display: none;
+}
 
 /* --------------------------------------------------------------------
    Footer
@@ -192,7 +316,14 @@ ul { list-style: none; margin: 0; padding: 0; }
     margin-top: 64px;
 }
 
-
+.site-footer__stripe {
+    height: 4px;
+    background-image: repeating-linear-gradient(
+        135deg,
+        var(--yellow) 0 10px,
+        var(--asphalt) 10px 20px
+    );
+}
 
 .site-footer__inner {
     max-width: 1440px;
@@ -260,28 +391,66 @@ ul { list-style: none; margin: 0; padding: 0; }
         display: flex;
     }
 
+    .nav-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(23, 24, 27, 0.55);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 150;
+    }
+
+    .nav-overlay.is-open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
     .site-nav {
-        position: absolute;
-        top: var(--header-h);
-        left: 0;
+        position: fixed;
+        top: 0;
         right: 0;
+        bottom: 0;
+        width: min(320px, 85vw);
         flex: none;
         background: var(--asphalt);
-        border-bottom: 1px solid var(--line);
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.2s ease;
+        border-left: 1px solid var(--line);
+        transform: translateX(100%);
+        transition: transform 0.28s ease;
+        z-index: 200;
+        overflow-y: auto;
+        display: block;
+        box-shadow: -12px 0 32px rgba(0, 0, 0, 0.3);
     }
 
     .site-nav.is-open {
-        max-height: 260px;
+        transform: translateX(0);
     }
+
+    .nav-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        margin: 16px 16px 0 auto;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .nav-close svg { width: 18px; height: 18px; stroke: var(--off-white); }
+
+    .nav-close:hover { border-color: var(--yellow); }
+    .nav-close:hover svg { stroke: var(--yellow); }
 
     .site-nav__list {
         flex-direction: column;
         align-items: stretch;
         gap: 0;
-        padding: 8px 20px 16px;
+        padding: 16px 20px 24px;
     }
 
     .nav-btn {
@@ -292,17 +461,36 @@ ul { list-style: none; margin: 0; padding: 0; }
         padding: 14px 12px;
     }
 
+    .site-nav__lang {
+        margin-left: 0;
+        padding-top: 10px;
+        justify-content: center;
+    }
+
+    .lang-switch__toggle {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* flows inline under the toggle instead of overlaying, since the drawer
+       itself already scrolls if content overflows */
+    .lang-switch__menu {
+        position: static;
+        margin-top: 8px;
+        box-shadow: none;
+        border-color: var(--line);
+    }
+
     .site-footer__inner {
         flex-direction: column;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .site-nav, .nav-toggle span, .nav-btn {
+    .site-nav, .nav-overlay, .nav-toggle span, .nav-btn {
         transition: none;
     }
 }
-
 /* ==========================================================================
    Taxi Partner — car fleet carousel
    3 cards visible · arrows/dots page to the next set · swipe on touch
@@ -327,9 +515,13 @@ ul { list-style: none; margin: 0; padding: 0; }
     flex-shrink: 0;
 }
 
+.fleet__viewport {
+    overflow: hidden;
+}
+
 .fleet-arrow {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     border: 1px solid var(--border-soft);
     background: var(--card-bg);
@@ -337,28 +529,46 @@ ul { list-style: none; margin: 0; padding: 0; }
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: border-color 0.15s ease, background-color 0.15s ease;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 
 .fleet-arrow svg { width: 18px; height: 18px; stroke: var(--ink); }
 
-.fleet-arrow:hover:not(:disabled) {
-    border-color: var(--yellow);
+.fleet-arrow--next {
     background: var(--yellow);
+    border-color: var(--yellow);
+}
+.fleet-arrow--next svg { stroke: var(--asphalt-deep); }
+
+.fleet-arrow--prev {
+    background: var(--yellow);
+    border-color: var(--yellow);
+}
+.fleet-arrow--prev svg { stroke: var(--asphalt-deep); }
+
+.fleet-arrow:hover:not(:disabled) {
+    transform: scale(1.06);
+}
+
+.fleet-arrow--prev:hover:not(:disabled) {
+    background: #FFD65C;
+    border-color: #FFD65C;
+}
+
+.fleet-arrow--next:hover:not(:disabled) {
+    background: #FFD65C;
+    border-color: #FFD65C;
 }
 
 .fleet-arrow:disabled {
-    opacity: 0.35;
+    opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
 }
 
 .fleet-arrow:focus-visible {
     outline: 2px solid var(--yellow);
     outline-offset: 2px;
-}
-
-.fleet__viewport {
-    overflow: hidden;
 }
 
 .fleet__track {
@@ -379,13 +589,7 @@ ul { list-style: none; margin: 0; padding: 0; }
     flex-direction: column;
 }
 
-.car-card__media img{
-    height: 300px;
-    overflow: hidden;
-    object-fit: contain;
-    background: var(--panel);
-    inset: 0;
-    margin: 10px;
+.car-card__media {
     aspect-ratio: 4 / 3;
     background: linear-gradient(135deg, var(--panel-deep), var(--panel));
     display: flex;
@@ -394,11 +598,11 @@ ul { list-style: none; margin: 0; padding: 0; }
     position: relative;
 }
 
-.car-card__media svg {
-    width: 56%;
-    height: 56%;
-    stroke: var(--asphalt);
-    opacity: 0.85;
+.car-card__media svg { width: 56%; height: 56%; stroke: var(--asphalt); opacity: 0.85; }
+.car-card__media img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 
 .car-card__badge {
@@ -452,7 +656,6 @@ ul { list-style: none; margin: 0; padding: 0; }
 .car-card__specs svg { width: 15px; height: 15px; stroke: #6B6E73; }
 
 .car-card__footer {
-    margin-top: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -533,17 +736,9 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 @media (max-width: 640px) {
     .car-card { flex: 0 0 100%; }
-    .fleet__head { flex-direction: column; align-items: flex-start; }
+    .fleet-arrow { width: 38px; height: 38px; }
+    .fleet__head { flex-direction: row; align-items: center; }
 }
-h1{
-   font-family: var(--font-display);}
-    font-size: 2rem;
-    font-weight: 400;
-    color: var(--asphalt-deep);
-    margin-bottom: 20px;
-    margin-left: 20px;
-}
-
 /* ==========================================================================
    Taxi Partner — shared page sections
    Used by: home.html, for_drivers.html, for_investors.html

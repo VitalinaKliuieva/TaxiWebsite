@@ -29,22 +29,7 @@ INSTALLED_APPS = [
     "core",
 ]
 
-
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-
-    "django.contrib.sessions.middleware.SessionMiddleware",
-
-    "django.middleware.common.CommonMiddleware",
-
-    "django.middleware.csrf.CsrfViewMiddleware",
-
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-
-    "django.contrib.messages.middleware.MessageMiddleware",
-
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
+LOCALE_PATHS = [BASE_DIR / "locale"]
 
 
 ROOT_URLCONF = "config.urls"
@@ -98,11 +83,10 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = []
 
 
-LANGUAGE_CODE = "en-us"
+
 
 TIME_ZONE = "Europe/Warsaw"
 
-USE_I18N = True
 
 USE_TZ = True
 
@@ -115,7 +99,30 @@ STATICFILES_DIRS = [
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+USE_I18N = True
+
+LANGUAGE_CODE = "en"
+
+LANGUAGES = [
+    ("en", "English"),
+    ("pl", "Polski"),
+    ("uk", "Українська"),
+    ("ru", "Русский")
+]
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",  # must come after Session, before Common
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 
 
 REST_FRAMEWORK = {

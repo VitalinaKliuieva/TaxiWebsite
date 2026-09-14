@@ -1,50 +1,114 @@
 (function () {
     "use strict";
 
-    var toggle = document.getElementById("navToggle");
-    var nav = document.getElementById("siteNav");
-
-    if (toggle && nav) {
-        toggle.addEventListener("click", function () {
-            var isOpen = nav.classList.toggle("is-open");
-            toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-        });
-
-        // close the mobile menu after a link is tapped
-        nav.addEventListener("click", function (event) {
-            if (event.target.closest("a")) {
-                nav.classList.remove("is-open");
-                toggle.setAttribute("aria-expanded", "false");
-            }
-        });
-
-        // close on click outside
-        document.addEventListener("click", function (event) {
-            var clickedInsideHeader = event.target.closest(".site-header");
-            if (!clickedInsideHeader && nav.classList.contains("is-open")) {
-                nav.classList.remove("is-open");
-                toggle.setAttribute("aria-expanded", "false");
-            }
-        });
-
-        // reset state if the viewport is resized back to desktop
-        window.addEventListener("resize", function () {
-            if (window.innerWidth > 860) {
-                nav.classList.remove("is-open");
-                toggle.setAttribute("aria-expanded", "false");
-            }
-        });
-    }
-
+    // ---- footer year ----
     var yearEl = document.getElementById("footerYear");
     if (yearEl) {
         yearEl.textContent = new Date().getFullYear();
+    }
+
+    // ---- language switcher dropdown ----
+    var langToggle = document.getElementById("langToggle");
+    var langMenu = document.getElementById("langMenu");
+
+    if (langToggle && langMenu) {
+        function closeLangMenu() {
+            langMenu.hidden = true;
+            langToggle.setAttribute("aria-expanded", "false");
+        }
+
+        function openLangMenu() {
+            langMenu.hidden = false;
+            langToggle.setAttribute("aria-expanded", "true");
+        }
+
+        langToggle.addEventListener("click", function (event) {
+            event.stopPropagation();
+            if (langMenu.hidden) {
+                openLangMenu();
+            } else {
+                closeLangMenu();
+            }
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!langMenu.hidden && !event.target.closest(".lang-switch")) {
+                closeLangMenu();
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape" && !langMenu.hidden) {
+                closeLangMenu();
+                langToggle.focus();
+            }
+        });
     }
 })();
 
 (function () {
     "use strict";
 
+    // ---- mobile nav drawer (the ONLY nav-toggle logic in this file) ----
+    var toggleBtn = document.getElementById("navToggle");
+    var closeBtn = document.getElementById("navClose");
+    var nav = document.getElementById("siteNav");
+    var overlay = document.getElementById("navOverlay");
+
+    if (!toggleBtn || !nav || !overlay) return;
+
+    function isOpen() {
+        return nav.classList.contains("is-open");
+    }
+
+    function openNav() {
+        nav.classList.add("is-open");
+        overlay.classList.add("is-open");
+        toggleBtn.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeNav() {
+        nav.classList.remove("is-open");
+        overlay.classList.remove("is-open");
+        toggleBtn.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+    }
+
+    toggleBtn.addEventListener("click", function () {
+        isOpen() ? closeNav() : openNav();
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeNav);
+    }
+
+    overlay.addEventListener("click", closeNav);
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && isOpen()) {
+            closeNav();
+            toggleBtn.focus();
+        }
+    });
+
+    nav.addEventListener("click", function (event) {
+        if (event.target.closest("a")) {
+            closeNav();
+        }
+    });
+
+    window.addEventListener("resize", function () {
+        if (window.innerWidth > 860 && isOpen()) {
+            closeNav();
+        }
+    });
+})();
+
+(function () {
+    "use strict";
+
+    // ---- fleet carousel (the ONLY carousel logic in this file — single-step version) ----
     function initFleetCarousel(root) {
         var viewport = root.querySelector(".fleet__viewport");
         var track = root.querySelector(".fleet__track");
@@ -55,9 +119,9 @@
 
         if (!cards.length) return;
 
-        var page = 0;
+        var index = 0;
         var perPage = 3;
-        var pageCount = 1;
+        var maxIndex = 0;
 
         function getPerPage() {
             var w = window.innerWidth;
@@ -69,11 +133,11 @@
         function buildDots() {
             if (!dotsWrap) return;
             dotsWrap.innerHTML = "";
-            for (var i = 0; i < pageCount; i++) {
+            for (var i = 0; i <= maxIndex; i++) {
                 var dot = document.createElement("button");
                 dot.type = "button";
-                dot.className = "fleet__dot" + (i === page ? " is-active" : "");
-                dot.setAttribute("aria-label", "Show cars " + (i + 1));
+                dot.className = "fleet__dot" + (i === index ? " is-active" : "");
+                dot.setAttribute("aria-label", "Show car " + (i + 1));
                 dot.addEventListener("click", (function (idx) {
                     return function () { goTo(idx); };
                 })(i));
@@ -85,42 +149,41 @@
             if (!dotsWrap) return;
             var dots = dotsWrap.querySelectorAll(".fleet__dot");
             dots.forEach(function (d, i) {
-                d.classList.toggle("is-active", i === page);
+                d.classList.toggle("is-active", i === index);
             });
         }
 
         function updateArrows() {
-            if (prevBtn) prevBtn.disabled = page === 0;
-            if (nextBtn) nextBtn.disabled = page === pageCount - 1;
+            if (prevBtn) prevBtn.disabled = index === 0;
+            if (nextBtn) nextBtn.disabled = index === maxIndex;
         }
 
         function render(recomputeLayout) {
             var newPerPage = getPerPage();
             if (recomputeLayout || newPerPage !== perPage) {
                 perPage = newPerPage;
-                pageCount = Math.max(1, Math.ceil(cards.length / perPage));
-                page = Math.min(page, pageCount - 1);
+                maxIndex = Math.max(0, cards.length - perPage);
+                index = Math.min(index, maxIndex);
                 buildDots();
             }
 
             var cardWidth = cards[0].getBoundingClientRect().width;
             var gap = parseFloat(getComputedStyle(track).gap || 20);
-            var offset = page * perPage * (cardWidth + gap);
+            var offset = index * (cardWidth + gap);
             track.style.transform = "translateX(-" + offset + "px)";
 
             updateArrows();
             updateDots();
         }
 
-        function goTo(index) {
-            page = Math.max(0, Math.min(index, pageCount - 1));
+        function goTo(newIndex) {
+            index = Math.max(0, Math.min(newIndex, maxIndex));
             render(false);
         }
 
-        if (prevBtn) prevBtn.addEventListener("click", function () { goTo(page - 1); });
-        if (nextBtn) nextBtn.addEventListener("click", function () { goTo(page + 1); });
+        if (prevBtn) prevBtn.addEventListener("click", function () { goTo(index - 1); });
+        if (nextBtn) nextBtn.addEventListener("click", function () { goTo(index + 1); });
 
-        // touch swipe
         var startX = null;
         viewport.addEventListener("touchstart", function (e) {
             startX = e.touches[0].clientX;
@@ -130,7 +193,7 @@
             if (startX === null) return;
             var deltaX = e.changedTouches[0].clientX - startX;
             if (Math.abs(deltaX) > 40) {
-                goTo(deltaX < 0 ? page + 1 : page - 1);
+                goTo(deltaX < 0 ? index + 1 : index - 1);
             }
             startX = null;
         });
@@ -146,9 +209,11 @@
 
     document.querySelectorAll(".fleet").forEach(initFleetCarousel);
 })();
+
 (function () {
     "use strict";
 
+    // ---- contact forms (driver / investor) ----
     var tabs = document.querySelectorAll(".form-tab");
     var panels = document.querySelectorAll(".form-panel");
 

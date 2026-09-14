@@ -1,3 +1,4 @@
+{% load i18n %}
 
 <div class="fleet">
     <div class="fleet__head">
@@ -6,10 +7,10 @@
             {% if fleet_lede %}<p class="section-lede">{{ fleet_lede }}</p>{% endif %}
         </div>
         <div class="fleet__controls">
-            <button type="button" class="fleet-arrow fleet-arrow--prev" aria-label="Previous cars">
+            <button type="button" class="fleet-arrow fleet-arrow--prev" aria-label="{% trans 'Previous cars' %}">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
-            <button type="button" class="fleet-arrow fleet-arrow--next" aria-label="Next cars">
+            <button type="button" class="fleet-arrow fleet-arrow--next" aria-label="{% trans 'Next cars' %}">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
             </button>
         </div>
@@ -46,7 +47,7 @@
                         </li>
                         <li>
                             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
-                            {{ car.seats }} seats
+                            {% blocktrans count counter=car.seats %}{{ counter }} seat{% plural %}{{ counter }} seats{% endblocktrans %}
                         </li>
                     </ul>
                     <div class="car-card__footer">
