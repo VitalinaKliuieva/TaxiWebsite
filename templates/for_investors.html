@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "For Investors — Taxi Partner" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages.css' %}">
+<link rel="stylesheet" href="{% static 'css/steps.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero__inner">
+        <div>
+            <p class="hero__eyebrow">{% trans "For Investors" %}</p>
+            <h1 class="hero__title">{% blocktrans %}Put your car to work <em>without</em> managing a driver.{% endblocktrans %}</h1>
+            <p class="hero__text">
+                {% blocktrans %}
+                Sell your car into our fleet, or place it with us to rent out, and we handle
+                vetting drivers, upkeep, and payouts — you get the return without the phone calls.
+                {% endblocktrans %}
+            </p>
+            <div class="hero__actions">
+                <a href="#process" class="btn btn--primary">{% trans "See how it works" %}</a>
+                <a href="{% url 'contacts' %}" class="btn btn--outline">{% trans "Talk to our team" %}</a>
+            </div>
+        </div>
+
+        <div class="hero__stats">
+            <div class="stat-card">
+                <span class="stat-card__value">{{ investor_stats.avg_return|default:"12–18%" }}</span>
+                <span class="stat-card__label">{% trans "Typical annual return" %}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-card__value">{{ investor_stats.payout_time|default:"48h" }}</span>
+                <span class="stat-card__label">{% trans "Payout turnaround" %}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-card__value">{{ investor_stats.cars_managed|default:"180+" }}</span>
+                <span class="stat-card__label">{% trans "Vehicles under management" %}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-card__value">{{ investor_stats.cities|default:"6" }}</span>
+                <span class="stat-card__label">{% trans "Cities we operate in" %}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <p class="eyebrow">{% trans "How it works for you" %}</p>
+        <h2 class="section-title">{% trans "Two ways to invest" %}</h2>
+        <p class="section-lede">
+            {% blocktrans %}
+            Choose the arrangement that fits — sell outright, or keep ownership and let us
+            manage the rental on your behalf.
+            {% endblocktrans %}
+        </p>
+    </div>
+
+    <div class="reasons-grid">
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+            </div>
+            <h3 class="reason-card__title">{% trans "Sell to the fleet" %}</h3>
+            <p class="reason-card__text">{% trans "Get a fair-market valuation and a lump-sum payment — the car becomes part of our managed fleet." %}</p>
+        </div>
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <h3 class="reason-card__title">{% trans "Keep ownership, rent it out" %}</h3>
+            <p class="reason-card__text">{% trans "We rent your car to a vetted driver and pay you a share of the rental income on a fixed schedule." %}</p>
+        </div>
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/><circle cx="12" cy="8" r="4"/></svg>
+            </div>
+            <h3 class="reason-card__title">{% trans "Vetted drivers only" %}</h3>
+            <p class="reason-card__text">{% trans "Every driver placed in your car passes the same background and licence checks, no exceptions." %}</p>
+        </div>
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <h3 class="reason-card__title">{% trans "Maintenance handled" %}</h3>
+            <p class="reason-card__text">{% trans "Servicing, insurance renewals, and repairs are arranged by us and tracked in your account." %}</p>
+        </div>
+    </div>
+</section>
+
+<section id="process" class="section section--panel section--panel-wide">
+    <div class="section-inner">
+        <div class="section-head">
+            <p class="eyebrow">{% trans "The process" %}</p>
+            <h2 class="section-title">{% trans "From your car to your first payout" %}</h2>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <span class="step__number">1</span>
+                <h3 class="step__title">{% trans "Free consultation" %}</h3>
+                <p class="step__text">{% trans "Tell us about the car and what you're looking for — sale or ongoing rental income." %}</p>
+            </div>
+            <div class="step-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+            <div class="step">
+                <span class="step__number">2</span>
+                <h3 class="step__title">{% trans "Vehicle inspection" %}</h3>
+                <p class="step__text">{% trans "We assess the car's condition and provide a valuation or a projected rental return." %}</p>
+            </div>
+            <div class="step-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+            <div class="step">
+                <span class="step__number">3</span>
+                <h3 class="step__title">{% trans "Agreement signed" %}</h3>
+                <p class="step__text">{% trans "Choose sale or rental terms and sign — everything is documented and legally binding." %}</p>
+            </div>
+            <div class="step-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+            <div class="step">
+                <span class="step__number">4</span>
+                <h3 class="step__title">{% trans "Car joins the fleet" %}</h3>
+                <p class="step__text">{% trans "We match it with a vetted driver and prepare it for the road." %}</p>
+            </div>
+            <div class="step-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+            <div class="step">
+                <span class="step__number">5</span>
+                <h3 class="step__title">{% trans "You get paid" %}</h3>
+                <p class="step__text">{% trans "Receive your lump sum, or track ongoing rental payouts from your investor account." %}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section--tight">
+    <div class="cta-banner">
+        <div>
+            <h2 class="cta-banner__title">{% trans "Curious what your car could earn?" %}</h2>
+            <p class="cta-banner__text">{% trans "Get a free valuation and a projected return before you commit to anything." %}</p>
+        </div>
+        <div class="cta-banner__actions">
+            <a href="{% url 'contacts' %}" class="btn btn--primary">{% trans "Get a free valuation" %}</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

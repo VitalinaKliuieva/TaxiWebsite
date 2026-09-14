@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Rent a Car — Taxi Partner" %}{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero__inner">
+        <div>
+            <p class="hero__eyebrow">{% trans "For Drivers" %}</p>
+            <h1 class="hero__title">{% blocktrans %}Get a car, get on the road, <em>keep</em> what you earn.{% endblocktrans %}</h1>
+            <p class="hero__text">
+                {% blocktrans %}
+                No car of your own? Rent one from our fleet — fully insured, regularly
+                serviced, and ready to register with Bolt and Uber — and start driving in days.
+                {% endblocktrans %}
+            </p>
+            <div class="hero__actions">
+                <a href="#fleet" class="btn btn--primary">{% trans "Choose your car" %}</a>
+                <a href="{% url 'contacts' %}" class="btn btn--outline">{% trans "Talk to our team" %}</a>
+            </div>
+        </div>
+
+        <div class="hero__stats">
+            <div class="stat-card">
+                <span class="stat-card__value">{{ driver_stats.avg_approval|default:"3 days" }}</span>
+                <span class="stat-card__label">{% trans "Average approval time" %}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-card__value">{{ driver_stats.weekly_rate_from|default:"$150" }}</span>
+                <span class="stat-card__label">{% trans "Weekly rental, starting from" %}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-card__value">{{ driver_stats.fleet_size|default:"180+" }}</span>
+                <span class="stat-card__label">{% trans "Cars ready to rent" %}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-card__value">{{ driver_stats.support|default:"7 days" }}</span>
+                <span class="stat-card__label">{% trans "Support desk availability" %}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <p class="eyebrow">{% trans "Why drive with us" %}</p>
+        <h2 class="section-title">{% trans "Everything except the driving is handled" %}</h2>
+        <p class="section-lede">
+            {% trans "You focus on rides and ratings. We handle the car." %}
+        </p>
+    </div>
+
+    <div class="reasons-grid">
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l6-4 6 4v12"/><path d="M14 21v-6h4v6"/></svg>
+            </div>
+            <h3 class="reason-card__title">{% trans "No down payment" %}</h3>
+            <p class="reason-card__text">{% trans "Rent a car week to week instead of financing one — start earning without a large upfront cost." %}</p>
+        </div>
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <h3 class="reason-card__title">{% trans "Insured & inspected" %}</h3>
+            <p class="reason-card__text">{% trans "Every car is insured and checked on a fixed schedule, so breakdowns don't come out of your pocket." %}</p>
+        </div>
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+            </div>
+            <h3 class="reason-card__title">{% trans "Ready for Bolt & Uber" %}</h3>
+            <p class="reason-card__text">{% trans "Cars come pre-approved for the platforms you already drive on, so you can register faster." %}</p>
+        </div>
+        <div class="reason-card">
+            <div class="reason-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/><circle cx="12" cy="8" r="4"/></svg>
+            </div>
+            <h3 class="reason-card__title">{% trans "A real support team" %}</h3>
+            <p class="reason-card__text">{% trans "Questions about the car or the rental go to a local team, not a chatbot." %}</p>
+        </div>
+    </div>
+</section>
+
+<section id="fleet" class="section">
+    <div class="section-head">
+        <p class="eyebrow">{% trans "The fleet" %}</p>
+        <h2 class="section-title">{% trans "Choose your next taxi vehicle" %}</h2>
+        <p class="section-lede">{% trans "Request a vehicle and our team will confirm availability and terms." %}</p>
+    </div>
+
+    {% trans "Cars available to rent" as fleet_title_text %}
+    {% trans "Pick a car and it can be ready for you within days." as fleet_lede_text %}
+    {% include "fleet.html" with fleet_title=fleet_title_text fleet_lede=fleet_lede_text cars=cars %}
+</section>
+
+{% endblock %}
